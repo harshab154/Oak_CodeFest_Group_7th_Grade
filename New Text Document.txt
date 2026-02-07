@@ -1,0 +1,32 @@
+Arduino code (working)
+const int STEER_X = A0;   
+const int SPEED_Y = A3;   
+
+const int DEAD_LOW  = 400;
+const int DEAD_HIGH = 600;
+
+void setup() {
+  Serial.begin(115200);
+}
+
+void loop() {
+  int steer = analogRead(STEER_X);
+  int speed = analogRead(SPEED_Y);
+
+  char steerCmd = 'N'; 
+  char speedCmd = 'S'; 
+
+  if (speed < DEAD_LOW)      speedCmd = 'F'; 
+  else if (speed > DEAD_HIGH) speedCmd = 'B';
+
+  if (steer < DEAD_LOW)      steerCmd = 'L';
+  else if (steer > DEAD_HIGH) steerCmd = 'R'; 
+
+ 
+  Serial.print("SPD:");
+  Serial.print(speedCmd);
+  Serial.print(" STR:");
+  Serial.println(steerCmd);
+
+  delay(20); 
+}
